@@ -1,0 +1,27 @@
+# permissions for end users to view operatingsystems.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/name: clusterrole
+    app.kubernetes.io/instance: operatingsystems-viewer-role
+    app.kubernetes.io/component: rbac
+    app.kubernetes.io/created-by: aviator
+    app.kubernetes.io/part-of: aviator
+    app.kubernetes.io/managed-by: kustomize
+  name: operatingsystems-viewer-role
+rules:
+- apiGroups:
+  - vm.cloudclub.io
+  resources:
+  - operatingsystems
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - vm.cloudclub.io
+  resources:
+  - operatingsystems/status
+  verbs:
+  - get

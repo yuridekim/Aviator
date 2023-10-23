@@ -1,0 +1,39 @@
+# This kustomization.yaml is not intended to be run by itself,
+# since it depends on service name and namespace that are out of this kustomize package.
+# It should be run by config/default
+resources:
+- bases/vm.cloudclub.io_creates.yaml
+- bases/vm.cloudclub.io_deletes.yaml
+- bases/vm.cloudclub.io_updates.yaml
+- bases/vm.cloudclub.io_gets.yaml
+- bases/vm.cloudclub.io_operatingsystems.yaml
+- bases/vm.cloudclub.io_data.yaml
+- bases/vm.cloudclub.io_plans.yaml
+#+kubebuilder:scaffold:crdkustomizeresource
+
+patches:
+# [WEBHOOK] To enable webhook, uncomment all the sections with [WEBHOOK] prefix.
+# patches here are for enabling the conversion webhook for each CRD
+#- path: patches/webhook_in_creates.yaml
+#- path: patches/webhook_in_deletes.yaml
+#- path: patches/webhook_in_updates.yaml
+#- path: patches/webhook_in_gets.yaml
+#- path: patches/webhook_in_operatingsystems.yaml
+#- path: patches/webhook_in_data.yaml
+#- path: patches/webhook_in_plans.yaml
+#+kubebuilder:scaffold:crdkustomizewebhookpatch
+
+# [CERTMANAGER] To enable cert-manager, uncomment all the sections with [CERTMANAGER] prefix.
+# patches here are for enabling the CA injection for each CRD
+#- path: patches/cainjection_in_creates.yaml
+#- path: patches/cainjection_in_deletes.yaml
+#- path: patches/cainjection_in_updates.yaml
+#- path: patches/cainjection_in_gets.yaml
+#- path: patches/cainjection_in_operatingsystems.yaml
+#- path: patches/cainjection_in_data.yaml
+#- path: patches/cainjection_in_plans.yaml
+#+kubebuilder:scaffold:crdkustomizecainjectionpatch
+
+# the following config is for teaching kustomize how to do kustomization for CRDs.
+configurations:
+- kustomizeconfig.yaml

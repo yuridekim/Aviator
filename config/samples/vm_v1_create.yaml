@@ -1,0 +1,12 @@
+apiVersion: vm.cloudclub.io/v1
+kind: Create
+metadata:
+  labels:
+    app.kubernetes.io/name: create
+    app.kubernetes.io/instance: create-sample
+    app.kubernetes.io/part-of: aviator
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/created-by: aviator
+  name: create-sample
+spec:
+  # TODO(user): Add fields here
