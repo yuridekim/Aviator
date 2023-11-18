@@ -1,0 +1,44 @@
+# 1. Test & Build about GO Code
+# 2. Push the Container image of Operator Controller to NCP Registry
+# 3. Up-to-date kustomization file to cicd repository
+name: cicd
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get verion
+        id: image
+        run: |
+          VERSION=$(echo ${{ github.sha }} | cut -c1-8)
+          echo VERSION=$VERSION
+          echo "::set-output name=version::$VERSION"
+      
+      # kustomize 명령을 가져온다.
+      - name: Setup Kustomize
+        uses: imranismail/setup-kustomize@v1
+
+      - name: Checkout kustomize repository
+        uses: actions/checkout@v2
+        with:
+          # kubernetes 설정정보 저장소
+          repository: github.com/cloud-club/aviator-cicd
+          ref: main
+          # 다른 저장소에 push 하려면 Personal Access Token이 필요.
+          token: ${{ secrets.ACTION_TOKEN }}
+          path: aviator-cicd
+      # 새 이미지 버전으로 파일 수정
+      - name: Update Kubernetes resources
+        run: |
+          cd aviator-cicd/prd
+          kustomize edit set image ${{ env.IMAGE_NAME }}:${{ steps.image.outputs.version }}
+          cat kustomization.yaml
+          
+      # 수정된 파일 commit & push
+      - name: Commit files
+        run: |
+          cd aviator-cicd
+          git config --global user.email "dev-kimdoyoung@github.com"
+          git config --global user.name "dev-kimdoyoung"
+          git commit -am "Update image tag"
+          git push -u origin main
+          
