@@ -1,27 +1,15 @@
-# permissions for end users to view gets.
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   labels:
     app.kubernetes.io/name: clusterrole
-    app.kubernetes.io/instance: get-viewer-role
+    app.kubernetes.io/instance: manager-role
     app.kubernetes.io/component: rbac
     app.kubernetes.io/created-by: aviator
     app.kubernetes.io/part-of: aviator
     app.kubernetes.io/managed-by: kustomize
-  name: get-viewer-role
+  name: manager-role
 rules:
-- apiGroups:
-  - vm.cloudclub.io
-  resources:
-  - gets
-  verbs:
-  - get
-  - list
-  - watch
-- apiGroups:
-  - vm.cloudclub.io
-  resources:
-  - gets/status
-  verbs:
-  - get
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "list", "watch"]

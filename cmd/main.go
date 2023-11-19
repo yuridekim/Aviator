@@ -89,32 +89,11 @@ func main() {
 		os.Exit(1)
 	}
 
-	if err = (&controller.CreateReconciler{
+	if err = (&controller.ProvisionReconciler{
 		Client: mgr.GetClient(),
 		Scheme: mgr.GetScheme(),
 	}).SetupWithManager(mgr); err != nil {
-		setupLog.Error(err, "unable to create controller", "controller", "Create")
-		os.Exit(1)
-	}
-	if err = (&controller.DeleteReconciler{
-		Client: mgr.GetClient(),
-		Scheme: mgr.GetScheme(),
-	}).SetupWithManager(mgr); err != nil {
-		setupLog.Error(err, "unable to create controller", "controller", "Delete")
-		os.Exit(1)
-	}
-	if err = (&controller.UpdateReconciler{
-		Client: mgr.GetClient(),
-		Scheme: mgr.GetScheme(),
-	}).SetupWithManager(mgr); err != nil {
-		setupLog.Error(err, "unable to create controller", "controller", "Update")
-		os.Exit(1)
-	}
-	if err = (&controller.GetReconciler{
-		Client: mgr.GetClient(),
-		Scheme: mgr.GetScheme(),
-	}).SetupWithManager(mgr); err != nil {
-		setupLog.Error(err, "unable to create controller", "controller", "Get")
+		setupLog.Error(err, "unable to create controller", "controller", "Provision")
 		os.Exit(1)
 	}
 	if err = (&controller.OperatingsystemsReconciler{

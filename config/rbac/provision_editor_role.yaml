@@ -1,27 +1,31 @@
-# permissions for end users to view creates.
+# permissions for end users to edit provisions.
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   labels:
     app.kubernetes.io/name: clusterrole
-    app.kubernetes.io/instance: create-viewer-role
+    app.kubernetes.io/instance: provision-editor-role
     app.kubernetes.io/component: rbac
     app.kubernetes.io/created-by: aviator
     app.kubernetes.io/part-of: aviator
     app.kubernetes.io/managed-by: kustomize
-  name: create-viewer-role
+  name: provision-editor-role
 rules:
 - apiGroups:
   - vm.cloudclub.io
   resources:
-  - creates
+  - provisions
   verbs:
+  - create
+  - delete
   - get
   - list
+  - patch
+  - update
   - watch
 - apiGroups:
   - vm.cloudclub.io
   resources:
-  - creates/status
+  - provisions/status
   verbs:
   - get
