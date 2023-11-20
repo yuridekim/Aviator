@@ -22,7 +22,7 @@ jobs:
         uses: imranismail/setup-kustomize@v1
 
       - name: Checkout kustomize repository
-        uses: actions/checkout@releases/v2
+        uses: actions/checkout@v2
         with:
           # kubernetes 설정정보 저장소
           repository: cloud-club/aviator-cicd
