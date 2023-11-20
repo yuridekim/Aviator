@@ -44,7 +44,7 @@ jobs:
       # 수정된 파일 commit & push
       - name: Commit files
         run: |
-          git config --global user.name "${{ env.GITHUB_ACTOR }}"
-          git config --global user.email "<>"
+          git config --global user.name "${GITHUB_ACTOR}"
+          git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
           git commit -am "Update image tag ${{ env.IMAGE_NAME }}:${{ steps.image.outputs.version }}"
           git push
