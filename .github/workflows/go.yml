@@ -42,5 +42,5 @@ jobs:
           git config --global user.email "dev-kimdoyoung@github.com"
           git config --global user.name "dev-kimdoyoung"
           git commit -am "Update image tag ${{ env.IMAGE_NAME }}:${{ steps.image.outputs.version }}"
-          git push -u https://${{ secrets.ACTION_TOKEN }}@github.com/cloud-club/aviator-cicd.git
+          git push -u https://${{ secrets.GITHUB_TOKEN }}@github.com/cloud-club/aviator-cicd.git
          
