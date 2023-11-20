@@ -2,7 +2,8 @@
 # 2. Push the Container image of Operator Controller to NCP Registry
 # 3. Up-to-date kustomization file to cicd repository
 name: cicd
-
+permissions:
+  contents: write
 on: [push]
 
 jobs:
