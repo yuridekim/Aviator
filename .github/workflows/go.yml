@@ -41,6 +41,7 @@ jobs:
           # kubernetes 설정정보 저장소
           repository: cloud-club/aviator-cicd
           ref: main
+          token: ${{ secrets.CICD_SECRET }}
 
       # 새 이미지 버전으로 파일 수정
       - name: Update Kubernetes resources
@@ -52,7 +53,7 @@ jobs:
       # 수정된 파일 commit & push
       - name: Commit files
         run: |
-          git config --global user.name "dev-kimdoyoung"
-          git config --global user.email "dev-kimdoyoung@github.com"
+          git config user.name github-actions
+          git config user.email github-actions@github.com
           git commit -am "Update image tag ${{ env.IMAGE_NAME }}:${{ steps.image.outputs.version }}"
           git push origin main
