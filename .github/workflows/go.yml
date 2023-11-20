@@ -41,18 +41,18 @@ jobs:
           kustomize edit set image ${{ env.IMAGE_NAME }}:${{ steps.image.outputs.version }}
           cat kustomization.yaml
 
-      - name: Commit & Push changes
-        uses: actions-js/push@master
-        with:
-          github_token: ${{ secrets.CICD_SECRET }}
-          message: "Update image tag ${{ env.IMAGE_NAME }}:${{ steps.image.outputs.version }}"
-          repository: cloud-club/aviator-cicd
-          branch: master
+#      - name: Commit & Push changes
+#        uses: actions-js/push@master
+#        with:
+#          github_token: ${{ secrets.CICD_SECRET }}
+#          message: "Update image tag ${{ env.IMAGE_NAME }}:${{ steps.image.outputs.version }}"
+#          repository: cloud-club/aviator-cicd
+#          branch: master
       # 수정된 파일 commit & push
-#      - name: Commit files
-#        run: |
-#          git config --global user.email "dev-kimdoyoung@github.com"
-#          git config --global user.name "dev-kimdoyoung"
+      - name: Commit files
+        run: |
+          git config --global user.name "${{ env.CI_COMMIT_AUTHOR }}"
+          git config --global user.email "username@users.noreply.github.com"
 #          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/cloud-club/aviator-cicd.git
-#          git commit -am
-#          git push origin master
+          git commit -am "Update image tag ${{ env.IMAGE_NAME }}:${{ steps.image.outputs.version }}"
+          git push
