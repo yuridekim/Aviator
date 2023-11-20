@@ -6,8 +6,6 @@ name: cicd
 on: [push]
 
 jobs:
-  build:
-
   deploy:
     runs-on: ubuntu-latest
 
