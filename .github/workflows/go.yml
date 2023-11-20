@@ -48,7 +48,8 @@ jobs:
       # 수정된 파일 commit & push
       - name: Commit files
         run: |
-          git config --global user.name "${GITHUB_ACTOR}"
-          git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+          git config --global user.name "dev-kimdoyoung"
+          git config --global user.email "dev-kimdoyoung@github.com"
+          git remote add origin https://dev-kimdoyoung:${{ secrets.CICD_SECRET }}@github.com/cloud-club/aviator-cicd.git
           git commit -am "Update image tag ${{ env.IMAGE_NAME }}:${{ steps.image.outputs.version }}"
           git push
