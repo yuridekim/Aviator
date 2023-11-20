@@ -44,7 +44,7 @@ jobs:
       - name: Commit & Push changes
         uses: actions-js/push@master
         with:
-          github_token: ${{ secrets.ACTION_TOKEN }}
+          github_token: ${{ secrets.CICD_SECRET }}
           message: "Update image tag ${{ env.IMAGE_NAME }}:${{ steps.image.outputs.version }}"
           repository: cloud-club/aviator-cicd
           branch: master
