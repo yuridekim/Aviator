@@ -39,7 +39,6 @@ jobs:
       # 수정된 파일 commit & push
       - name: Commit files
         run: |
-          cd aviator-cicd
           git config --global user.email "dev-kimdoyoung@github.com"
           git config --global user.name "dev-kimdoyoung"
           git commit -am "Update image tag ${{ env.IMAGE_NAME }}:${{ steps.image.outputs.version }}"
