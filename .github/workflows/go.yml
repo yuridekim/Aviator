@@ -2,11 +2,17 @@
 # 2. Push the Container image of Operator Controller to NCP Registry
 # 3. Up-to-date kustomization file to cicd repository
 name: cicd
+
+on: [push]
+
+jobs:
+  build:
+
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Get verion
+      - name: Get version
         id: image
         run: |
           VERSION=$(echo ${{ github.sha }} | cut -c1-8)
@@ -18,7 +24,7 @@ name: cicd
         uses: imranismail/setup-kustomize@v1
 
       - name: Checkout kustomize repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@releases/v2
         with:
           # kubernetes 설정정보 저장소
           repository: github.com/cloud-club/aviator-cicd
@@ -39,6 +45,6 @@ name: cicd
           cd aviator-cicd
           git config --global user.email "dev-kimdoyoung@github.com"
           git config --global user.name "dev-kimdoyoung"
-          git commit -am "Update image tag"
+          git commit -am "Update image tag ${{ env.IMAGE_NAME }}:${{ steps.image.outputs.version }}"
           git push -u origin main
           
