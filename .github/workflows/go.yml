@@ -47,6 +47,7 @@ jobs:
       # 새 이미지 버전으로 파일 수정
       - name: Update Kubernetes resources
         run: |
+          cd prd
           kustomize edit set image ${{ env.IMAGE_NAME }}:${{ steps.image.outputs.version }}
           cat kustomization.yaml
 
