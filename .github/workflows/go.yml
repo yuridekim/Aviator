@@ -48,6 +48,7 @@ jobs:
       - name: Update Kubernetes resources
         run: |
           cd prd
+          echo $IMAGE_PATH
           kustomize edit set image $IMAGE_PATH:${{ steps.image.outputs.version }}
           cat kustomization.yaml
 
