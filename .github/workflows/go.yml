@@ -47,8 +47,8 @@ jobs:
       # 새 이미지 버전으로 파일 수정
       - name: Update Kubernetes resources
         run: |
-          cd prd
-          kustomize edit set image ${{ env.IMAGE_NAME }}:${{ steps.image.outputs.version }}
+          cd prd:wq
+          kustomize edit set image ${{ env.IMAGE_PATH }}:${{ steps.image.outputs.version }}
           cat kustomization.yaml
 
       # 수정된 파일 commit & push
@@ -56,5 +56,5 @@ jobs:
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
-          git commit -am "Update image tag ${{ env.IMAGE_NAME }}:${{ steps.image.outputs.version }}"
+          git commit -am "Update image tag ${{ env.IMAGE_PATH }}:${{ steps.image.outputs.version }}"
           git push origin main
