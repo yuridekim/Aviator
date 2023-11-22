@@ -7,8 +7,6 @@ on:
   push:
     branches:
       - master
-      - develop
-      - feature/**
 
 env:
   PRIVATE_REGISTRY_URL: "aviator-registry.kr.ncr.ntruss.com"
