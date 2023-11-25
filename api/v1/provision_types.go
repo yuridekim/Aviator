@@ -23,17 +23,17 @@ import (
 // EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
 // NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
 
-// GetSpec defines the desired state of Get
-type GetSpec struct {
+// ProvisionSpec defines the desired state of Provision
+type ProvisionSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 
-	// Foo is an example field of Get. Edit get_types.go to remove/update
+	// Foo is an example field of Provision. Edit provision_types.go to remove/update
 	Foo string `json:"foo,omitempty"`
 }
 
-// GetStatus defines the observed state of Get
-type GetStatus struct {
+// ProvisionStatus defines the observed state of Provision
+type ProvisionStatus struct {
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 }
@@ -41,24 +41,24 @@ type GetStatus struct {
 //+kubebuilder:object:root=true
 //+kubebuilder:subresource:status
 
-// Get is the Schema for the gets API
-type Get struct {
+// Provision is the Schema for the provisions API
+type Provision struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
-	Spec   GetSpec   `json:"spec,omitempty"`
-	Status GetStatus `json:"status,omitempty"`
+	Spec   ProvisionSpec   `json:"spec,omitempty"`
+	Status ProvisionStatus `json:"status,omitempty"`
 }
 
 //+kubebuilder:object:root=true
 
-// GetList contains a list of Get
-type GetList struct {
+// ProvisionList contains a list of Provision
+type ProvisionList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
-	Items           []Get `json:"items"`
+	Items           []Provision `json:"items"`
 }
 
 func init() {
-	SchemeBuilder.Register(&Get{}, &GetList{})
+	SchemeBuilder.Register(&Provision{}, &ProvisionList{})
 }

@@ -1,9 +1,6 @@
 ## Append samples of your project ##
 resources:
-- vm_v1_create.yaml
-- vm_v1_delete.yaml
-- vm_v1_update.yaml
-- vm_v1_get.yaml
+- vm_v1_provision.yaml
 - vm_v1_operatingsystems.yaml
 - vm_v1_data.yaml
 - vm_v1_plan.yaml

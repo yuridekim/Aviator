@@ -14,34 +14,7 @@ resources:
   controller: true
   domain: cloudclub.io
   group: vm
-  kind: Create
-  path: vm.cloudclub.io/api/v1
-  version: v1
-- api:
-    crdVersion: v1
-    namespaced: true
-  controller: true
-  domain: cloudclub.io
-  group: vm
-  kind: Delete
-  path: vm.cloudclub.io/api/v1
-  version: v1
-- api:
-    crdVersion: v1
-    namespaced: true
-  controller: true
-  domain: cloudclub.io
-  group: vm
-  kind: Update
-  path: vm.cloudclub.io/api/v1
-  version: v1
-- api:
-    crdVersion: v1
-    namespaced: true
-  controller: true
-  domain: cloudclub.io
-  group: vm
-  kind: Get
+  kind: Provision
   path: vm.cloudclub.io/api/v1
   version: v1
 - api:

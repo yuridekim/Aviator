@@ -1,12 +1,12 @@
 apiVersion: vm.cloudclub.io/v1
-kind: Create
+kind: Provision
 metadata:
   labels:
-    app.kubernetes.io/name: create
-    app.kubernetes.io/instance: create-sample
+    app.kubernetes.io/name: provision
+    app.kubernetes.io/instance: provision-sample
     app.kubernetes.io/part-of: aviator
     app.kubernetes.io/managed-by: kustomize
     app.kubernetes.io/created-by: aviator
-  name: create-sample
+  name: provision-sample
 spec:
   # TODO(user): Add fields here

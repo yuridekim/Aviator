@@ -1,20 +1,20 @@
-# permissions for end users to view updates.
+# permissions for end users to view provisions.
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   labels:
     app.kubernetes.io/name: clusterrole
-    app.kubernetes.io/instance: update-viewer-role
+    app.kubernetes.io/instance: provision-viewer-role
     app.kubernetes.io/component: rbac
     app.kubernetes.io/created-by: aviator
     app.kubernetes.io/part-of: aviator
     app.kubernetes.io/managed-by: kustomize
-  name: update-viewer-role
+  name: provision-viewer-role
 rules:
 - apiGroups:
   - vm.cloudclub.io
   resources:
-  - updates
+  - provisions
   verbs:
   - get
   - list
@@ -22,6 +22,6 @@ rules:
 - apiGroups:
   - vm.cloudclub.io
   resources:
-  - updates/status
+  - provisions/status
   verbs:
   - get
