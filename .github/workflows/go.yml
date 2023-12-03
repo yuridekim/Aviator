@@ -31,6 +31,57 @@ jobs:
       - name: Display Go version
         run: go version
 
+      - name: Install test and coverage analysis tools
+        run: |
+          go install github.com/axw/gocov/gocov@latest
+          go install github.com/AlekSi/gocov-xml@latest
+  
+      - name: Print Go version and environment
+        id: vars
+        run: |
+          printf "Using go at: $(which go)\n"
+          printf "Go version: $(go version)\n"
+          printf "\n\nGo environment:\n\n"
+          go env
+          printf "\n\nSystem environment:\n\n"
+          env
+          printf "Git version: $(git version)\n\n"
+          # Calculate the short SHA1 hash of the git commit
+          echo "short_sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+      
+      - name: Get dependencies
+        run: |
+          go get -v -t -d ./...
+      
+      - name: Build Aviator
+        working-directory: ./cmd
+        env:
+          CGO_ENABLED: 0
+        run: |
+          go build -trimpath -ldflags="-w -s" -v
+  
+      - name: Run tests
+        # Allow the job to continue even if the tests fail, so we can publish the report separately
+        # https://stackoverflow.com/questions/57850553/github-actions-check-steps-status
+        id: step_test
+        continue-on-error: true
+        run: |
+          go test ./... -v -covermode count -coverprofile test-coverage.out | tee test_output_unit_temp.log
+          go test -v -coverprofile="cover-profile.out" -short -race ./...
+  
+      - name: Prepare coverage reports
+        run: |
+          mkdir coverage
+          gocov convert cover-profile.out > coverage/coverage.json
+          # Because Windows doesn't work with input redirection like *nix, but output redirection works.
+          (cat ./coverage/coverage.json | gocov-xml) > coverage/coverage.xml
+  
+      - name: Archive code coverage results
+        uses: actions/upload-artifact@v3
+        with:
+          name: code-coverage-report
+          path: coverage/coverage.xml
+
   build-and-push-image:
     name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
