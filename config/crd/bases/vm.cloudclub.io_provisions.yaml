@@ -1,0 +1,123 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.13.0
+  name: provisions.vm.cloudclub.io
+spec:
+  group: vm.cloudclub.io
+  names:
+    kind: Provision
+    listKind: ProvisionList
+    plural: provisions
+    singular: provision
+  scope: Namespaced
+  versions:
+  - name: v1
+    schema:
+      openAPIV3Schema:
+        description: Provision is the Schema for the provisions API
+        properties:
+          apiVersion:
+            description: 'APIVersion defines the versioned schema of this representation
+              of an object. Servers should convert recognized schemas to the latest
+              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource this
+              object represents. Servers may infer this from the endpoint the client
+              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: ProvisionSpec defines the desired state of Provision
+            properties:
+              accessControlGroupNoList:
+                type: string
+              associateWithPublicIp:
+                type: boolean
+              blockDevicePartitionMountPoint:
+                type: string
+              blockDevicePartitionSize:
+                type: string
+              blockStorageMapping:
+                properties:
+                  blockStorageMappingBlockStorageName:
+                    type: string
+                  blockStorageMappingBlockStorageSize:
+                    type: string
+                  blockStorageMappingBlockStorageVolumeTypeCode:
+                    type: string
+                  blockStorageMappingEncrypted:
+                    type: string
+                  blockStorageMappingList:
+                    type: integer
+                  blockStorageMappingSnapshotInstanceNo:
+                    type: string
+                type: object
+              feeSystemTypeCode:
+                type: string
+              initScriptNo:
+                type: string
+              isEncryptedBaseBlockStorageVolume:
+                type: boolean
+              isProtectServerTermination:
+                type: boolean
+              loginKeyName:
+                type: string
+              memberServerImageInstanceNo:
+                type: string
+              networkInterface:
+                properties:
+                  networkInterfaceIp:
+                    type: string
+                  networkInterfaceList:
+                    type: integer
+                  networkInterfaceNo:
+                    type: string
+                  networkInterfaceSubnetNo:
+                    type: string
+                type: object
+              placementGroupNo:
+                type: string
+              raidTypeName:
+                type: string
+              responseFormatType:
+                type: string
+              server:
+                properties:
+                  serverCreateCount:
+                    type: integer
+                  serverCreateStartNo:
+                    type: integer
+                  serverDescription:
+                    type: string
+                  serverImageNo:
+                    type: string
+                  serverImageProductCode:
+                    type: string
+                  serverName:
+                    type: string
+                  serverProductCode:
+                    type: string
+                  serverSpecCode:
+                    type: string
+                type: object
+              subnetNo:
+                type: string
+              vpcNo:
+                type: string
+            type: object
+          status:
+            description: ProvisionStatus defines the observed state of Provision
+            properties:
+              phase:
+                type: string
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
