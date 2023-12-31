@@ -18,7 +18,7 @@ package controller
 
 import (
 	"context"
-
+	"github.com/go-logr/logr"
 	"k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/apimachinery/pkg/runtime"
 	ctrl "sigs.k8s.io/controller-runtime"
@@ -30,6 +30,8 @@ import (
 	vmv1 "vm.cloudclub.io/api/v1"
 )
 
+var provisionReconcileMap map[string]func(*ProvisionReconciler, logr.Logger, string, interface{}) error
+
 // ProvisionReconciler reconciles a Provision object
 type ProvisionReconciler struct {
 	client.Client
@@ -40,13 +42,23 @@ type ProvisionReconciler struct {
 func NewProvisionReconciler(
 	client client.Client,
 	scheme *runtime.Scheme,
-	ncpService *ncputil.NcpService,
-) *ProvisionReconciler {
+	ncpService *ncputil.NcpService) *ProvisionReconciler {
+
+	initProvisionReconcileMap()
 	return &ProvisionReconciler{
 		Client:     client,
 		Scheme:     scheme,
 		ncpService: ncpService,
 	}
+}
+
+func initProvisionReconcileMap() {
+	provisionReconcileMap = make(map[string]func(*ProvisionReconciler, logr.Logger, string, interface{}) error)
+	provisionReconcileMap["provision"] = provision
+	provisionReconcileMap["deProvision"] = deProvision
+	provisionReconcileMap["update"] = update
+	provisionReconcileMap["get"] = get
+	provisionReconcileMap["stop"] = stop
 }
 
 //+kubebuilder:rbac:groups=vm.cloudclub.io,resources=provisions,verbs=get;list;watch;create;update;patch;delete
@@ -65,13 +77,13 @@ func NewProvisionReconciler(
 func (r *ProvisionReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	log := log.FromContext(ctx)
 
-	log.V(0).Info("Reconciling Provision request", "Request", req)
+	log.V(ErrorLevelIsInfo).Info("Reconciling Provision request", "Request", req)
 
 	original := &vmv1.Provision{}
 	err := r.Get(ctx, req.NamespacedName, original)
 	if err != nil {
 		if errors.IsNotFound(err) {
-			log.V(0).Info("Provision resource not found. Ignoring reconciliation.")
+			log.V(ErrorLevelIsInfo).Info("Provision resource not found. Ignoring reconciliation.")
 			return ctrl.Result{}, nil
 		}
 		log.Error(err, "Failed to get Provision resource")
@@ -80,47 +92,44 @@ func (r *ProvisionReconciler) Reconcile(ctx context.Context, req ctrl.Request) (
 
 	switch original.Status.Phase {
 	case "", vmv1.ProvisionPhaseCreate:
-		log.V(0).Info("Creating a new VM")
-		// create
-		err := r.ncpService.Server.Create(apiUrlCreate)
-		if err != nil {
-			log.Error(err, "Failed to create VM")
-			return ctrl.Result{}, err
+		if v, ok := provisionReconcileMap["provision"]; ok {
+			if err = v(r, log, apiUrlCreate, nil); err != nil {
+				log.Error(err, "Failed to create VM")
+				return ctrl.Result{}, err
+			}
 		}
 	case vmv1.ProvisionPhaseUpdate:
-		// update
-		log.V(0).Info("Updating an existing VM")
-		err := r.ncpService.Server.Update(apiUrlUpdate)
-		if err != nil {
-			log.Error(err, "Failed to update VM")
-			return ctrl.Result{}, err
+		if v, ok := provisionReconcileMap["update"]; ok {
+			if err = v(r, log, apiUrlUpdate, nil); err != nil {
+				log.Error(err, "Failed to update VM")
+				return ctrl.Result{}, err
+			}
 		}
 	case vmv1.ProvisionPhaseStop:
-		// delete
-		log.V(0).Info("Stopping an existing VM")
-		err := r.ncpService.Server.Stop(apiUrlDelete)
-		if err != nil {
-			log.Error(err, "Failed to stop VM")
-			return ctrl.Result{}, err
+		if v, ok := provisionReconcileMap["stop"]; ok {
+			if err = v(r, log, apiUrlStop, nil); err != nil {
+				log.Error(err, "Failed to stop VM")
+				return ctrl.Result{}, err
+			}
 		}
 	case vmv1.ProvisionPhaseDelete:
-		// delete
-		log.V(0).Info("Deleting an existing VM")
-		err := r.ncpService.Server.Delete(apiUrlDelete)
-		if err != nil {
-			log.Error(err, "Failed to delete VM")
-			return ctrl.Result{}, err
+		if v, ok := provisionReconcileMap["deProvision"]; ok {
+			if err = v(r, log, apiUrlDelete, nil); err != nil {
+				log.Error(err, "Failed to delete VM")
+				return ctrl.Result{}, err
+			}
 		}
 	case vmv1.ProvisionPhaseGet:
-		// get info
-		log.V(0).Info("Getting information for an existing VM")
-		err := r.ncpService.Server.Get(apiUrlGet)
-		if err != nil {
-			log.Error(err, "Failed to get VM information")
-			return ctrl.Result{}, err
+		if v, ok := provisionReconcileMap["get"]; ok {
+			if err = v(r, log, apiUrlGet, nil); err != nil {
+				log.Error(err, "Failed to get VM information")
+				return ctrl.Result{}, err
+			}
 		}
 	default:
-		log.V(0).Info("No action defined for the current phase")
+		log.V(ErrorLevelIsAnError).Error(err, "No action defined for the current phase",
+			"reconcile phase", original.Status.Phase, "namespace", req.NamespacedName)
+		return ctrl.Result{}, err
 	}
 
 	return ctrl.Result{}, nil
@@ -131,4 +140,30 @@ func (r *ProvisionReconciler) SetupWithManager(mgr ctrl.Manager) error {
 	return ctrl.NewControllerManagedBy(mgr).
 		For(&vmv1.Provision{}).
 		Complete(r)
+}
+
+func provision(r *ProvisionReconciler, log logr.Logger, url string, payload interface{}) error {
+	log.V(ErrorLevelIsInfo).Info("Creating a new VM")
+	return r.ncpService.Server.Create(url, payload)
+}
+
+func deProvision(r *ProvisionReconciler, log logr.Logger, url string, payload interface{}) error {
+	log.V(ErrorLevelIsInfo).Info("Deleting an existing VM")
+	return r.ncpService.Server.Delete(url)
+}
+
+func update(r *ProvisionReconciler, log logr.Logger, url string, payload interface{}) error {
+	log.V(ErrorLevelIsInfo).Info("Updating an existing VM")
+	return r.ncpService.Server.Update(url)
+}
+
+func stop(r *ProvisionReconciler, log logr.Logger, url string, payload interface{}) error {
+	log.V(ErrorLevelIsInfo).Info("Stopping an existing VM")
+	//return r.ncpService.Server.Stop(url)
+	return nil
+}
+
+func get(r *ProvisionReconciler, log logr.Logger, url string, payload interface{}) error {
+	log.V(ErrorLevelIsInfo).Info("Getting information for an existing VM")
+	return r.ncpService.Server.Get(url)
 }

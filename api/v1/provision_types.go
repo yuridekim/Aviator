@@ -77,6 +77,7 @@ const (
 	ProvisionPhaseStop   ProvisionPhase = "Stop"
 	ProvisionPhaseDelete ProvisionPhase = "Delete"
 	ProvisionPhaseGet    ProvisionPhase = "Get"
+	JobIsSuccess         ProvisionPhase = "Success"
 )
 
 // ProvisionStatus defines the observed state of Provision
