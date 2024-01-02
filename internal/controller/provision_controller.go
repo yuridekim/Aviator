@@ -76,7 +76,6 @@ func initProvisionReconcileMap() {
 // - https://pkg.go.dev/sigs.k8s.io/controller-runtime@v0.16.3/pkg/reconcile
 func (r *ProvisionReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	log := log.FromContext(ctx)
-
 	log.V(ErrorLevelIsInfo).Info("Reconciling Provision request", "Request", req)
 
 	original := &vmv1.Provision{}
