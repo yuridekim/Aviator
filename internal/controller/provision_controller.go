@@ -143,17 +143,20 @@ func (r *ProvisionReconciler) SetupWithManager(mgr ctrl.Manager) error {
 
 func provision(r *ProvisionReconciler, log logr.Logger, url string, payload interface{}) error {
 	log.V(ErrorLevelIsInfo).Info("Creating a new VM")
-	return r.ncpService.Server.Create(url, payload)
+	//return r.ncpService.Server.Create(url, payload)
+	return nil
 }
 
 func deProvision(r *ProvisionReconciler, log logr.Logger, url string, payload interface{}) error {
 	log.V(ErrorLevelIsInfo).Info("Deleting an existing VM")
-	return r.ncpService.Server.Delete(url)
+	//return r.ncpService.Server.Delete(url)
+	return nil
 }
 
 func update(r *ProvisionReconciler, log logr.Logger, url string, payload interface{}) error {
 	log.V(ErrorLevelIsInfo).Info("Updating an existing VM")
-	return r.ncpService.Server.Update(url)
+	//return r.ncpService.Server.Update(url)
+	return nil
 }
 
 func stop(r *ProvisionReconciler, log logr.Logger, url string, payload interface{}) error {
@@ -164,5 +167,6 @@ func stop(r *ProvisionReconciler, log logr.Logger, url string, payload interface
 
 func get(r *ProvisionReconciler, log logr.Logger, url string, payload interface{}) error {
 	log.V(ErrorLevelIsInfo).Info("Getting information for an existing VM")
-	return r.ncpService.Server.Get(url)
+	return nil
+	//return r.ncpService.Server.Get(url)
 }

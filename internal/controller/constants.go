@@ -6,7 +6,7 @@ const (
 	apiUrlGet    = "https://ncloud.apigw.ntruss.com/vserver/v2/getMemberServerImageInstanceList"
 	apiUrlStop   = "https://ncloud.apigw.ntruss.com/vserver/v2/stopServerInstances"
 	apiUrlUpdate = "https://ncloud.apigw.ntruss.com/vserver/v2/changeServerInstanceSpec"
-
+	// error level
 	ErrorLevelIsFatal   = 1
 	ErrorLevelIsAnError = 2
 	ErrorLevelIsWarn    = 3
