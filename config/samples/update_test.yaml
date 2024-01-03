@@ -1,0 +1,9 @@
+apiVersion: vm.cloudclub.io/v1
+kind: Provision
+metadata:
+  name: provision-sample
+spec:
+  phase: "Update"
+  server:
+    serverProductCode: "SVR.VSVR.STAND.C032.M128.NET.HDD.B050.G002"
+  serverInstanceNoList.1: '21836952'
