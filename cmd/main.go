@@ -89,7 +89,11 @@ func main() {
 		os.Exit(1)
 	}
 
-	err = (controller.NewProvisionReconciler(mgr.GetClient(), mgr.GetScheme(), &pkg.NcpService{})).SetupWithManager(mgr)
+	err = (controller.NewProvisionReconciler(
+		mgr.GetClient(),
+		mgr.GetScheme(),
+		&pkg.NcpService{Server: pkg.NewServerService("6CmrDJ4KaswJ10g25GEP", "OvZ7QHH0Bi3AwGn5rlsD7xoC986bEOiIjdbwMFCo")},
+	)).SetupWithManager(mgr)
 	if err != nil {
 		setupLog.Error(err, "unable to create controller", "controller", "Provision")
 		os.Exit(1)

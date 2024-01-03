@@ -80,9 +80,13 @@ spec:
                   networkInterfaceSubnetNo:
                     type: string
                 type: object
+              phase:
+                type: string
               placementGroupNo:
                 type: string
               raidTypeName:
+                type: string
+              regionCode:
                 type: string
               responseFormatType:
                 type: string
@@ -105,6 +109,10 @@ spec:
                   serverSpecCode:
                     type: string
                 type: object
+              serverInstanceNo:
+                type: string
+              serverInstanceNoList.1:
+                type: string
               subnetNo:
                 type: string
               vpcNo:

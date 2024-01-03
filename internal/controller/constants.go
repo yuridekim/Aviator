@@ -7,10 +7,10 @@ const (
 	apiUrlStop   = "https://ncloud.apigw.ntruss.com/vserver/v2/stopServerInstances"
 	apiUrlUpdate = "https://ncloud.apigw.ntruss.com/vserver/v2/changeServerInstanceSpec"
 	// error level
+	ErrorLevelIsInfo    = 0
 	ErrorLevelIsFatal   = 1
 	ErrorLevelIsAnError = 2
 	ErrorLevelIsWarn    = 3
-	ErrorLevelIsInfo    = 4
 	ErrorLevelIsDebug   = 5
 	ErrorLevelIsTrace   = 6
 )
