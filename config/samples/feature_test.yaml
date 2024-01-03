@@ -1,0 +1,14 @@
+apiVersion: vm.cloudclub.io/v1
+kind: Provision
+metadata:
+  labels:
+    app.kubernetes.io/name: provision
+    app.kubernetes.io/instance: provision-sample
+    app.kubernetes.io/part-of: aviator
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/created-by: aviator
+  name: provision-sample
+spec:
+  accessControlGroupNoList: "debug"
+status:
+  phase: "Delete"
