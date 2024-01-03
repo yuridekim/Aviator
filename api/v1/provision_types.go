@@ -49,6 +49,9 @@ type NetworkInterface struct {
 
 // ProvisionSpec defines the desired state of Provision
 type ProvisionSpec struct {
+	RegionCode                        string              `json:"regionCode,omitempty"`
+	ServerInstanceNo                  string              `json:"serverInstanceNo,omitempty"`
+	ServerNo                          string              `json:"serverInstanceNoList.1,omitempty"`
 	AccessControlGroupNoListN         string              `json:"accessControlGroupNoList,omitempty"`
 	AssociateWithPublicIp             bool                `json:"associateWithPublicIp,omitempty"`
 	BlockDevicePartitionMountPoint    string              `json:"blockDevicePartitionMountPoint,omitempty"`
@@ -65,6 +68,7 @@ type ProvisionSpec struct {
 	SubnetNo                          string              `json:"subnetNo,omitempty"`
 	VpcNo                             string              `json:"vpcNo,omitempty"`
 	Server                            Server              `json:"server,omitempty"`
+	Phase                             ProvisionPhase      `json:"phase,omitempty"`
 	BlockStorageMapping               BlockStorageMapping `json:"blockStorageMapping,omitempty"`
 	NetworkInterface                  NetworkInterface    `json:"networkInterface,omitempty"`
 }
