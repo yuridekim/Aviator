@@ -3,7 +3,7 @@ module vm.cloudclub.io
 go 1.21.1
 
 require (
-	github.com/cloud-club/Aviator-service v0.0.0-20240101062303-75d8936802ef
+	github.com/cloud-club/Aviator-service v0.0.0-20240104105031-a8e9278c253b
 	github.com/go-logr/logr v1.2.4
 	github.com/onsi/ginkgo/v2 v2.11.0
 	github.com/onsi/gomega v1.27.10
