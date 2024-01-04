@@ -19,6 +19,8 @@ package main
 import (
 	"flag"
 	"github.com/cloud-club/Aviator-service/pkg"
+	"github.com/cloud-club/Aviator-service/types/auth"
+
 	"os"
 
 	// Import all Kubernetes client auth plugins (e.g. Azure, GCP, OIDC, etc.)
@@ -92,7 +94,9 @@ func main() {
 	err = (controller.NewProvisionReconciler(
 		mgr.GetClient(),
 		mgr.GetScheme(),
-		&pkg.NcpService{Server: pkg.NewServerService("6CmrDJ4KaswJ10g25GEP", "OvZ7QHH0Bi3AwGn5rlsD7xoC986bEOiIjdbwMFCo")},
+		&pkg.NcpService{
+			Server: pkg.NewServerService(
+				auth.NewKeyService("6CmrDJ4KaswJ10g25GEP", "OvZ7QHH0Bi3AwGn5rlsD7xoC986bEOiIjdbwMFCo"))},
 	)).SetupWithManager(mgr)
 	if err != nil {
 		setupLog.Error(err, "unable to create controller", "controller", "Provision")

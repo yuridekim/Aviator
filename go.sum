@@ -15,6 +15,8 @@ github.com/cloud-club/Aviator-service v0.0.0-20231217151335-e0cb2c2047aa h1:yxnD
 github.com/cloud-club/Aviator-service v0.0.0-20231217151335-e0cb2c2047aa/go.mod h1:cxKHHT+qtSSe3wItn+bOn/1Qlg6ZYLPupaV+cvz8XUs=
 github.com/cloud-club/Aviator-service v0.0.0-20240101062303-75d8936802ef h1:JY+BCA0nTSCt6XxDlfYatz9GHlsK1zgqp8bMb9B0AA8=
 github.com/cloud-club/Aviator-service v0.0.0-20240101062303-75d8936802ef/go.mod h1:PfsYKMy6EuEgb2drsd0aXKNuMK72aCJXk+nS2kSwGbA=
+github.com/cloud-club/Aviator-service v0.0.0-20240104105031-a8e9278c253b h1:qkG2911G2WWMLV7zhVFBVHgrcUVis/ADIlj6G39reNc=
+github.com/cloud-club/Aviator-service v0.0.0-20240104105031-a8e9278c253b/go.mod h1:PfsYKMy6EuEgb2drsd0aXKNuMK72aCJXk+nS2kSwGbA=
 github.com/creack/pty v1.1.9/go.mod h1:oKZEueFk5CKHvIhNR5MUki03XCEU+Q6VDXinZuGJ33E=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
