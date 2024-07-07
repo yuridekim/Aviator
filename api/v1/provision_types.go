@@ -20,22 +20,73 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-// EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
-// NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
+type Server struct {
+	CreateCount      int    `json:"serverCreateCount,omitempty"`
+	CreateStartNo    int    `json:"serverCreateStartNo,omitempty"`
+	Description      string `json:"serverDescription,omitempty"`
+	ImageNo          string `json:"serverImageNo,omitempty"`
+	ImageProductCode string `json:"serverImageProductCode,omitempty"`
+	Name             string `json:"serverName,omitempty"`
+	ProductCode      string `json:"serverProductCode,omitempty"`
+	SpecCode         string `json:"serverSpecCode,omitempty"`
+}
+
+type BlockStorageMapping struct {
+	BlockStorageName           string `json:"blockStorageMappingBlockStorageName,omitempty"`
+	BlockStorageSize           string `json:"blockStorageMappingBlockStorageSize,omitempty"`
+	BlockStorageVolumeTypeCode string `json:"blockStorageMappingBlockStorageVolumeTypeCode,omitempty"`
+	Encrypted                  string `json:"blockStorageMappingEncrypted,omitempty"`
+	Order                      int    `json:"blockStorageMappingList,omitempty"`
+	SnapshotInstanceNo         string `json:"blockStorageMappingSnapshotInstanceNo,omitempty"`
+}
+
+type NetworkInterface struct {
+	IP       string `json:"networkInterfaceIp,omitempty"`
+	No       string `json:"networkInterfaceNo,omitempty"`
+	Order    int    `json:"networkInterfaceList,omitempty"`
+	SubnetNo string `json:"networkInterfaceSubnetNo,omitempty"`
+}
 
 // ProvisionSpec defines the desired state of Provision
 type ProvisionSpec struct {
-	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
-
-	// Foo is an example field of Provision. Edit provision_types.go to remove/update
-	Foo string `json:"foo,omitempty"`
+	RegionCode                        string              `json:"regionCode,omitempty"`
+	ServerInstanceNo                  string              `json:"serverInstanceNo,omitempty"`
+	ServerNo                          string              `json:"serverInstanceNoList.1,omitempty"`
+	AccessControlGroupNoListN         string              `json:"accessControlGroupNoList,omitempty"`
+	AssociateWithPublicIp             bool                `json:"associateWithPublicIp,omitempty"`
+	BlockDevicePartitionMountPoint    string              `json:"blockDevicePartitionMountPoint,omitempty"`
+	BlockDevicePartitionSize          string              `json:"blockDevicePartitionSize,omitempty"`
+	FeeSystemTypeCode                 string              `json:"feeSystemTypeCode,omitempty"`
+	InitScriptNo                      string              `json:"initScriptNo,omitempty"`
+	IsEncryptedBaseBlockStorageVolume bool                `json:"isEncryptedBaseBlockStorageVolume,omitempty"`
+	IsProtectServerTermination        bool                `json:"isProtectServerTermination,omitempty"`
+	LoginKeyName                      string              `json:"loginKeyName,omitempty"`
+	MemberServerImageInstanceNo       string              `json:"memberServerImageInstanceNo,omitempty"`
+	PlacementGroupNo                  string              `json:"placementGroupNo,omitempty"`
+	RAIDTypeName                      string              `json:"raidTypeName,omitempty"`
+	ResponseFormatType                string              `json:"responseFormatType,omitempty"`
+	SubnetNo                          string              `json:"subnetNo,omitempty"`
+	VpcNo                             string              `json:"vpcNo,omitempty"`
+	Server                            Server              `json:"server,omitempty"`
+	Phase                             ProvisionPhase      `json:"phase,omitempty"`
+	BlockStorageMapping               BlockStorageMapping `json:"blockStorageMapping,omitempty"`
+	NetworkInterface                  NetworkInterface    `json:"networkInterface,omitempty"`
 }
+
+type ProvisionPhase string
+
+const (
+	ProvisionPhaseCreate ProvisionPhase = "Create"
+	ProvisionPhaseUpdate ProvisionPhase = "Update"
+	ProvisionPhaseStop   ProvisionPhase = "Stop"
+	ProvisionPhaseDelete ProvisionPhase = "Delete"
+	ProvisionPhaseGet    ProvisionPhase = "Get"
+	JobIsSuccess         ProvisionPhase = "Success"
+)
 
 // ProvisionStatus defines the observed state of Provision
 type ProvisionStatus struct {
-	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
+	Phase ProvisionPhase `json:"phase,omitempty"`
 }
 
 //+kubebuilder:object:root=true

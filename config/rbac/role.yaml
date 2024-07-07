@@ -1,15 +1,110 @@
+---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  labels:
-    app.kubernetes.io/name: clusterrole
-    app.kubernetes.io/instance: manager-role
-    app.kubernetes.io/component: rbac
-    app.kubernetes.io/created-by: aviator
-    app.kubernetes.io/part-of: aviator
-    app.kubernetes.io/managed-by: kustomize
   name: manager-role
 rules:
-- apiGroups: [""]
-  resources: ["pods"]
-  verbs: ["get", "list", "watch"]
+- apiGroups:
+  - vm.cloudclub.io
+  resources:
+  - data
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - vm.cloudclub.io
+  resources:
+  - data/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - vm.cloudclub.io
+  resources:
+  - data/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - vm.cloudclub.io
+  resources:
+  - operatingsystems
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - vm.cloudclub.io
+  resources:
+  - operatingsystems/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - vm.cloudclub.io
+  resources:
+  - operatingsystems/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - vm.cloudclub.io
+  resources:
+  - plans
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - vm.cloudclub.io
+  resources:
+  - plans/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - vm.cloudclub.io
+  resources:
+  - plans/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - vm.cloudclub.io
+  resources:
+  - provisions
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - vm.cloudclub.io
+  resources:
+  - provisions/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - vm.cloudclub.io
+  resources:
+  - provisions/status
+  verbs:
+  - get
+  - patch
+  - update

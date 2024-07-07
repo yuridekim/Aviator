@@ -1,0 +1,14 @@
+apiVersion: vm.cloudclub.io/v1
+kind: Provision
+metadata:
+  name: provision-sample
+spec:
+  phase: "Create"
+  server:
+    serverImageProductCode: "SW.VSVR.OS.LNX64.CNTOS.0703.B050"
+    serverProductCode: "SVR.VSVR.HICPU.C002.M004.NET.HDD.B050.G002"
+  vpcNo: "52833"
+  subnetNo: "120320"
+  networkInterface:
+    networkInterfaceList: 0
+  accessControlGroupNoList: "148207"

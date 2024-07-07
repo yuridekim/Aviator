@@ -1,0 +1,7 @@
+apiVersion: vm.cloudclub.io/v1
+kind: Provision
+metadata:
+  name: provision-sample
+spec:
+  phase: "Get"
+  regionCode: "KR"
